@@ -6,7 +6,7 @@ import { ChatIcon } from "./icons/ChatIcon"
 
 export const BlogPost = () => {
     return (
-        <div className="flex max-w-xl flex-col items-center rounded-2xl border md:flex-row">
+        <div className="flex max-w-2xl flex-col items-center rounded-2xl border md:flex-row mt-8 mb-8">
             <div className="h-full w-full md:h-[200px] md:w-[300px]">
                 <img
                     src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTF8fGJsb2d8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60"
