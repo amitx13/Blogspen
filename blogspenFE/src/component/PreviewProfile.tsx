@@ -5,7 +5,7 @@ export const PreviewProfile = () => {
   const [isFollowed, setIsFollowed] = React.useState(false);
 
   return (
-    <Card className="max-w-[300px] max-h-24 mt-2">
+    <Card className="max-w-[300px] max-h-26">
       <CardHeader className="justify-between">
         <div className="flex gap-5">
           <Avatar isBordered radius="full" size="md" src="https://nextui.org/avatars/avatar-1.png" />

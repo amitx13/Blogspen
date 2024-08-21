@@ -7,14 +7,15 @@ import { WriteIcon } from "./icons/WriteIcon";
 
 
 interface MainNavbarProps {
+  theme:boolean
   setTheme: (theme: boolean) => void;
 }
-export default function MainNavbar({setTheme}:MainNavbarProps) {
+export default function MainNavbar({theme, setTheme}:MainNavbarProps) {
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <Navbar isBordered shouldHideOnScroll onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen} maxWidth={"full"}>
+    <Navbar isBordered onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen} maxWidth={"full"}>
       <NavbarContent justify="start" className="!flex-grow-0">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -25,15 +26,17 @@ export default function MainNavbar({setTheme}:MainNavbarProps) {
         <div className="font-bold">Blogspen</div>
       </NavbarBrand>
 
-      <NavbarMenu style={{ backgroundColor: "inherit" }} >
+      <NavbarMenu style={{ backgroundColor: "inherit", zIndex:"100"}} >
         <NavbarMenuItem >
-          <Link href="#" color="success">
-          <WriteIcon/>
+          <Link href="#" color="success" className="gap-2 font-medium">
+          <WriteIcon />
+          Write
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Link href="#" color="success">
-          <NotificationIcon size={18} />
+          <Link href="#" color="success" className="gap-2 font-medium">
+          <NotificationIcon size={24} />
+           Notifications
           </Link>
         </NavbarMenuItem>
       </NavbarMenu>
@@ -68,7 +71,7 @@ export default function MainNavbar({setTheme}:MainNavbarProps) {
         </NavbarItem>
 
         <NavbarItem >{/* change theam */}
-          <TheamSwitch setTheme={setTheme}/>
+          <TheamSwitch theme={theme} setTheme={setTheme}/>
         </NavbarItem>
 
         <NavbarItem >

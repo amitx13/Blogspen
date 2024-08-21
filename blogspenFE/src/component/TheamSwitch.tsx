@@ -3,13 +3,14 @@ import {MoonIcon} from "./icons/MoonIcon";
 import {SunIcon} from "./icons/SunIcon";
 
 interface TheamSwitchProps {
+  theme:boolean
   setTheme: (theme: boolean) => void;
 }
 
-export const TheamSwitch = ({setTheme}:TheamSwitchProps) => {
+export const TheamSwitch = ({theme, setTheme}:TheamSwitchProps) => {
   return (
     <Switch
-      defaultSelected
+      isSelected={theme}
       size="lg"
       color="success"
       startContent={<MoonIcon />}
