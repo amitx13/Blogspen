@@ -15,6 +15,9 @@ export const SignIn = ({isOpen, onOpenChange }:SignInProps) => {
         isOpen={isOpen} 
         onOpenChange={onOpenChange}
         placement="center"
+        size="2xl"
+        shadow="lg"
+        backdrop="blur"
       >
         <ModalContent>
           {(onClose) => (

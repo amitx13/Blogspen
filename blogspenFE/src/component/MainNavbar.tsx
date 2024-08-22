@@ -1,18 +1,23 @@
-import { Input, Link, Navbar, NavbarContent, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NavbarItem, NavbarBrand, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar } from "@nextui-org/react";
+import { Input, Link, Navbar, NavbarContent, NavbarMenu, NavbarMenuItem, NavbarMenuToggle, NavbarItem, NavbarBrand, DropdownItem, DropdownTrigger, Dropdown, DropdownMenu, Avatar, Button } from "@nextui-org/react";
 import { TheamSwitch } from "./TheamSwitch";
 import { useState } from "react";
 import { SearchIcon } from "./icons/SearchIcon";
 import { NotificationIcon } from "./icons/NotificationIcon";
 import { WriteIcon } from "./icons/WriteIcon";
-
-
+import { useRecoilValue } from "recoil";
+import { authState } from "../state/authState";
+import { useNavigate } from "react-router-dom";
 interface MainNavbarProps {
-  theme:boolean
+  theme: boolean
   setTheme: (theme: boolean) => void;
 }
-export default function MainNavbar({theme, setTheme}:MainNavbarProps) {
+export default function MainNavbar({ theme, setTheme }: MainNavbarProps) {
 
+  const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const auth = useRecoilValue(authState);
+
+
 
   return (
     <Navbar isBordered onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen} maxWidth={"full"}>
@@ -23,20 +28,20 @@ export default function MainNavbar({theme, setTheme}:MainNavbarProps) {
         />
       </NavbarContent>
       <NavbarBrand >
-        <div className="font-bold">Blogspen</div>
+        <div className="font-bold cursor-pointer" onClick={() => navigate("/")}>Blogspen</div>
       </NavbarBrand>
 
-      <NavbarMenu style={{ backgroundColor: "inherit", zIndex:"100"}} >
+      <NavbarMenu style={{ backgroundColor: "inherit", zIndex: "100" }} >
         <NavbarMenuItem >
           <Link href="#" color="success" className="gap-2 font-medium">
-          <WriteIcon />
-          Write
+            <WriteIcon />
+            Write
           </Link>
         </NavbarMenuItem>
         <NavbarMenuItem>
           <Link href="#" color="success" className="gap-2 font-medium">
-          <NotificationIcon size={24} />
-           Notifications
+            <NotificationIcon size={24} />
+            Notifications
           </Link>
         </NavbarMenuItem>
       </NavbarMenu>
@@ -44,15 +49,15 @@ export default function MainNavbar({theme, setTheme}:MainNavbarProps) {
       <NavbarContent className="gap-4 !flex-grow-0" justify="end">
 
         <NavbarItem className="hidden sm:flex"> {/* write */}
-          <Link color="foreground" href="#">
-          <WriteIcon/>
-          </Link>
+          <div color="foreground" className="cursor-pointer" onClick={()=> navigate("/new-story")}>
+            <WriteIcon />
+          </div>
         </NavbarItem>
 
         <NavbarItem className="hidden sm:flex">{/* notification */}
-          <Link href="#" aria-current="page" color="foreground">
-          <NotificationIcon size={24} />
-          </Link>
+          <div aria-current="page" color="foreground" className="cursor-pointer" >
+            <NotificationIcon size={24} />
+          </div>
         </NavbarItem>
 
         <NavbarItem className="sm:w-40 items-center">{/* search bar */}
@@ -71,11 +76,11 @@ export default function MainNavbar({theme, setTheme}:MainNavbarProps) {
         </NavbarItem>
 
         <NavbarItem >{/* change theam */}
-          <TheamSwitch theme={theme} setTheme={setTheme}/>
+          <TheamSwitch theme={theme} setTheme={setTheme} />
         </NavbarItem>
 
         <NavbarItem >
-          <Dropdown placement="bottom-end">
+          {auth.isAuthenticated ? <Dropdown placement="bottom-end">
             <DropdownTrigger>
               <Avatar
                 isBordered
@@ -102,7 +107,7 @@ export default function MainNavbar({theme, setTheme}:MainNavbarProps) {
                 Log Out
               </DropdownItem>
             </DropdownMenu>
-          </Dropdown>
+          </Dropdown> : <Button variant="flat" size="md" color="primary" onPress={() => navigate("/signup")} className="text-lg text-left">Sign Up</Button>}
         </NavbarItem>
 
       </NavbarContent>
