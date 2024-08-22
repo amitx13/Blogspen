@@ -6,7 +6,7 @@ import { NotificationIcon } from "./icons/NotificationIcon";
 import { WriteIcon } from "./icons/WriteIcon";
 import { useRecoilValue } from "recoil";
 import { authState } from "../state/authState";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 interface MainNavbarProps {
   theme: boolean
   setTheme: (theme: boolean) => void;
@@ -16,8 +16,9 @@ export default function MainNavbar({ theme, setTheme }: MainNavbarProps) {
   const navigate = useNavigate()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const auth = useRecoilValue(authState);
+  const location = useLocation();
 
-
+  console.log("Current Path:", location.pathname);
 
   return (
     <Navbar isBordered onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen} maxWidth={"full"}>
@@ -60,8 +61,16 @@ export default function MainNavbar({ theme, setTheme }: MainNavbarProps) {
           </div>
         </NavbarItem>
 
-        <NavbarItem className="sm:w-40 items-center">{/* search bar */}
-          <Input
+        <NavbarItem className={`${!(location.pathname === "/new-story") && `sm:w-40`} items-center`}>{/* search bar */}
+          {(location.pathname === "/new-story") ? 
+          <Button 
+            variant="flat"
+            size="md"
+            color="success"  
+            className="text-lg text-left rounded-full">
+              Publish
+          </Button>
+          : <Input
             classNames={{
               base: "max-w-full sm:max-w-[10rem] h-10",
               mainWrapper: "h-full",
@@ -72,7 +81,7 @@ export default function MainNavbar({ theme, setTheme }: MainNavbarProps) {
             size="sm"
             startContent={<SearchIcon size={18} />}
             type="search"
-          />
+          />}
         </NavbarItem>
 
         <NavbarItem >{/* change theam */}
