@@ -1,18 +1,44 @@
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Checkbox, Input, Link} from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Popover, PopoverTrigger, PopoverContent } from "@nextui-org/react";
 import { MailIcon } from "./icons/MailIcon";
 import { LockIcon } from "./icons/LockIcon";
+import { SigninSchema } from "@amitx13/blogspen-zod-validator";
+import { useState } from "react";
 
 interface SignInProps {
-    isOpen: boolean
-    onOpenChange: (val: boolean) => void
+  isOpen: boolean
+  onOpenChange: (val: boolean) => void
 }
 
-export const SignIn = ({isOpen, onOpenChange }:SignInProps) => {
+export const SignIn = ({ isOpen, onOpenChange }: SignInProps) => {
 
+  const [popoverVisible, setPopoverVisible] = useState(false);
+  const [form, setForm] = useState<SigninSchema>({
+    email: '',
+    password: ''
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm(prev => {
+      return {
+        ...prev,
+        [name]: value
+      }
+    })
+  }
+
+  const handleSubmit = () => {
+    if (form.email && form.password) {
+      console.log("API call with form data:", form);
+      setPopoverVisible(false);
+    } else {
+      setPopoverVisible(true);
+    }
+  }
   return (
     <>
-      <Modal 
-        isOpen={isOpen} 
+      <Modal
+        isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="center"
         size="2xl"
@@ -32,6 +58,8 @@ export const SignIn = ({isOpen, onOpenChange }:SignInProps) => {
                   label="Email"
                   placeholder="Enter your email"
                   variant="bordered"
+                  onChange={handleChange}
+                  value={form.email}
                 />
                 <Input
                   endContent={
@@ -41,27 +69,29 @@ export const SignIn = ({isOpen, onOpenChange }:SignInProps) => {
                   placeholder="Enter your password"
                   type="password"
                   variant="bordered"
+                  onChange={handleChange}
+                  value={form.password}
                 />
-                <div className="flex py-2 px-1 justify-between">
-                  <Checkbox
-                    classNames={{
-                      label: "text-small",
-                    }}
-                  >
-                    Remember me
-                  </Checkbox>
-                  <Link color="primary" href="#" size="sm">
-                    Forgot password?
-                  </Link>
-                </div>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={onClose}>
-                  Sign in
-                </Button>
+                <Popover placement="right" showArrow={true} isOpen={popoverVisible} color={"warning"} isDismissable={true} onClose={() => setPopoverVisible(false)}>
+                  <PopoverTrigger>
+                    <div>
+                      <Button color="primary" onPress={handleSubmit}>
+                        Sign in
+                      </Button>
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent >
+                    <div className="px-1 py-2">
+                      <div className="text-small font-bold">Incomplete Form</div>
+                      <div className="text-tiny">Please fill out all fields before submitting.</div>
+                    </div>
+                  </PopoverContent>
+                </Popover>
               </ModalFooter>
             </>
           )}

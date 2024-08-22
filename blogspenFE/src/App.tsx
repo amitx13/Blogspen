@@ -28,12 +28,17 @@ const App = () => {
         <Route path={routes.home} element={
           <>
             <TabsList />
-            <Home/>
+            <Home />
           </>
         } />
-        <Route path={routes.signUp} element={<SignUp/>}/>
-        <Route path={routes.write} element={<NewStory/>}/>
-        <Route path={routes.profile} element={<Navigate to="/"/>}/>
+        <Route path={routes.signUp} element={<SignUp />} />
+        <Route path={routes.write} element={
+          <>
+            {/* <TabsList /> */}
+            <NewStory />
+          </>
+        } />
+        <Route path={routes.profile} element={<Navigate to="/" />} />
       </Routes>
     </main>
   );

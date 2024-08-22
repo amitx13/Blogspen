@@ -17,9 +17,7 @@ export default function MainNavbar({ theme, setTheme }: MainNavbarProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const auth = useRecoilValue(authState);
   const location = useLocation();
-
-  console.log("Current Path:", location.pathname);
-
+  
   return (
     <Navbar isBordered onMenuOpenChange={setIsMenuOpen} isMenuOpen={isMenuOpen} maxWidth={"full"}>
       <NavbarContent justify="start" className="!flex-grow-0">
